@@ -1,0 +1,29 @@
+# Build output
+cmake-build-*/
+build/
+build-linux/
+bin/
+
+# IDE configurations
+.idea/
+.vscode/
+*.user
+
+# Binaries and intermediate objects
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+generated_*.c
+test_*
+!test_*.cpp
+
+# External tools
+tools/chibicc/
+
+# Graphviz outputs
+*.dot
+ast.png
+
