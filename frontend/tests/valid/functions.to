@@ -1,0 +1,19 @@
+i64 add(i64 a, i64 b) {
+    return a + b;
+}
+
+char get_first_char(ptr$ char str) {
+    return str[0];
+}
+
+void print_greeting() {
+    prints("Hello, world!\n");
+    return;
+}
+
+i32 main() {
+    i64 s = add(100, 200);
+    print_greeting();
+    return 0;
+}
+

@@ -1,0 +1,7 @@
+i32 main() {
+    elif (true) {
+        return 1;
+    }
+    return 0;
+}
+

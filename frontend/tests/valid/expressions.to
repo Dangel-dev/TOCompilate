@@ -1,0 +1,17 @@
+i32 test_expressions() {
+    i32 a = 10;
+    i32 b = 20;
+    i32 c = (a + b) * 2 - (b / 5) % 3;
+
+    bool f1 = (a < b) && (b >= 20) || (c == 0);
+    bool f2 = !(a != 10);
+
+    i32 bit = (a & 0x0F) | (b ^ 0x3) << 2 >> 1;
+    i32 inv = ~a;
+
+    ptr$ i32 p = 0;
+    *p = 42;
+
+    return c;
+}
+

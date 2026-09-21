@@ -1,0 +1,5 @@
+i32 main() {
+    char c = 'a;
+    return 0;
+}
+

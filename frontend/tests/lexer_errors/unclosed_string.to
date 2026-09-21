@@ -1,0 +1,6 @@
+i32 main() {
+    prints("Unclosed string literal without end quote
+    );
+    return 0;
+}
+

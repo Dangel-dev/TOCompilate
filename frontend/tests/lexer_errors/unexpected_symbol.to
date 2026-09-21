@@ -1,0 +1,5 @@
+i32 main() {
+    i32 #bad = 5;
+    return 0;
+}
+
