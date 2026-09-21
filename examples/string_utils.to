@@ -1,0 +1,57 @@
+//
+// строка и побитовые операции
+//
+
+i32 string_length(ptr$ char str)
+{
+    i32 len = 0;
+    while (str[len] != 0)
+    {
+        len += 1;
+    }
+    return len;
+}
+
+bool is_even(i32 val)
+{
+    // Проверка младшего бита через побитовое И
+    return (val & 1) == 0;
+}
+
+i32 power_of_two(i32 exponent)
+{
+    // Битовый сдвиг влево: 1 << exponent
+    return 1 << exponent;
+}
+
+i32 main(i32 argc, ptr$ ptr$ char \ \ argv)
+{
+    prints("String & Bitwise Demo\n");
+
+    ptr$ char greeting = "Hello, Compiler!";
+    prints("Input string: ");
+    prints(greeting);
+    prints("\n");
+
+    prints("String length: ");
+    i32 len = string_length(greeting);
+    printi(len);
+    prints("\n");
+
+    prints("2 ^ 8 using bitwise shift: ");
+    i32 pow8 = power_of_two(8);
+    printi(pow8);
+    prints("\n");
+
+    prints("Is 42 even: ");
+    if (is_even(42))
+    {
+        prints("true\n");
+    } else
+    {
+        prints("false\n");
+    }
+
+    return 0;
+}
+

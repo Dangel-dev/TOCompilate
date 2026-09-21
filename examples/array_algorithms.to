@@ -1,0 +1,64 @@
+//
+// pабота с указателями
+//
+
+i32 find_max(ptr$ i32 arr, i32 size)
+{
+    if (size <= 0)
+    {
+        return 0;
+    }
+
+    i32 max_val = arr[0];
+    i32 i = 1;
+
+    while (i < size)
+    {
+        if (arr[i] > max_val)
+        {
+            max_val = arr[i];
+        }
+        i += 1;
+    }
+    return max_val;
+}
+
+i32 sum_elements(ptr$ i32 arr, i32 size)
+{
+    i32 total = 0;
+    i32 i = 0;
+
+    while (i < size)
+    {
+        total += arr[i];
+        i += 1;
+    }
+    return total;
+}
+
+i32 main(i32 argc, ptr$ ptr$ char \ \ argv)
+{
+    prints("Array Processing Demo\n");
+
+    [5] i32 numbers;
+    numbers[0] = 15;
+    numbers[1] = 42;
+    numbers[2] = 8;
+    numbers[3] = 99;
+    numbers[4] = 23;
+
+    prints("Numbers: 15, 42, 8, 99, 23\n");
+
+    prints("Max element: ");
+    i32 max_item = find_max(numbers, 5);
+    printi(max_item);
+    prints("\n");
+
+    prints("Sum of elements: ");
+    i32 sum = sum_elements(numbers, 5);
+    printi(sum);
+    prints("\n");
+
+    return 0;
+}
+

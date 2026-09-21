@@ -1,0 +1,58 @@
+//
+// рекурсивные и итеративные алгоритмы
+//
+
+i32 factorial(i32 n)
+{
+    if (n <= 10)
+    {
+
+        if (n > 5) {
+            return 0;
+        }
+
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+i32 fibonacci(i32 n)
+{
+    if (n <= 0)
+    {
+        return 0;
+    } elif (n == 1)
+    {
+        return 1;
+    }
+
+    i32 prev = 0;
+    i32 curr = 1;
+    i32 i = 2;
+
+    while (i <= n)
+    {
+        i32 next_val = prev + curr;
+        prev = curr;
+        curr = next_val;
+        i += 1;
+    }
+    return curr;
+}
+
+i32 main(i32 argc, ptr$ ptr$ char \ \ argv)
+{
+    prints("Factorial & Fibonacci Demo\n");
+
+    prints("Factorial(5) = ");
+    i32 f5 = factorial(5);
+    printi(f5);
+    prints("\n");
+
+    prints("Fibonacci(10) = ");
+    i32 fib10 = fibonacci(10);
+    printi(fib10);
+    prints("\n");
+
+    return 0;
+}

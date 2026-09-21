@@ -1,0 +1,3428 @@
+Terminals unused in grammar
+
+    ERROR_TOKEN
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: function_list
+
+    2 function_list: %empty
+    3              | function_list function_decl
+
+    4 function_decl: type IDENTIFIER '(' opt_param_list ')' block
+
+    5 opt_param_list: %empty
+    6               | param_list
+
+    7 param_list: param
+    8           | param_list ',' param
+
+    9 param: type IDENTIFIER
+   10      | type OP_BACKSLASH OP_BACKSLASH IDENTIFIER
+
+   11 type: base_type
+   12     | KW_PTR type
+   13     | '[' INT_LITERAL ']' type
+
+   14 base_type: KW_I32
+   15          | KW_I64
+   16          | KW_BOOL
+   17          | KW_CHAR
+   18          | KW_VOID
+
+   19 block: '{' statement_list '}'
+
+   20 statement_list: %empty
+   21               | statement_list statement
+
+   22 statement: var_decl ';'
+   23          | if_stmt
+   24          | while_stmt
+   25          | return_stmt ';'
+   26          | expr ';'
+   27          | block
+   28          | ';'
+
+   29 var_decl: type IDENTIFIER
+   30         | type IDENTIFIER '=' expr
+
+   31 if_stmt: KW_IF '(' expr ')' block elif_list opt_else
+
+   32 elif_list: %empty
+   33          | elif_list KW_ELIF '(' expr ')' block
+
+   34 opt_else: %empty
+   35         | KW_ELSE block
+
+   36 while_stmt: KW_WHILE '(' expr ')' block
+
+   37 return_stmt: KW_RETURN
+   38            | KW_RETURN expr
+
+   39 expr: expr '=' expr
+   40     | expr OP_ADD_ASSIGN expr
+   41     | expr OP_SUB_ASSIGN expr
+   42     | expr OP_MUL_ASSIGN expr
+   43     | expr OP_DIV_ASSIGN expr
+   44     | expr OP_MOD_ASSIGN expr
+   45     | expr '+' expr
+   46     | expr '-' expr
+   47     | expr '*' expr
+   48     | expr '/' expr
+   49     | expr '%' expr
+   50     | expr OP_EQ expr
+   51     | expr OP_NEQ expr
+   52     | expr '<' expr
+   53     | expr OP_LE expr
+   54     | expr '>' expr
+   55     | expr OP_GE expr
+   56     | expr OP_AND expr
+   57     | expr OP_OR expr
+   58     | expr '&' expr
+   59     | expr '|' expr
+   60     | expr '^' expr
+   61     | expr OP_SHL expr
+   62     | expr OP_SHR expr
+   63     | '-' expr
+   64     | '!' expr
+   65     | '~' expr
+   66     | '*' expr
+   67     | expr '[' expr ']'
+   68     | IDENTIFIER '(' opt_arg_list ')'
+   69     | primary_expr
+
+   70 opt_arg_list: %empty
+   71             | arg_list
+
+   72 arg_list: expr
+   73         | arg_list ',' expr
+
+   74 primary_expr: IDENTIFIER
+   75             | INT_LITERAL
+   76             | CHAR_LITERAL
+   77             | STRING_LITERAL
+   78             | KW_TRUE
+   79             | KW_FALSE
+   80             | '(' expr ')'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '!' (33) 64
+    '%' (37) 49
+    '&' (38) 58
+    '(' (40) 4 31 33 36 68 80
+    ')' (41) 4 31 33 36 68 80
+    '*' (42) 47 66
+    '+' (43) 45
+    ',' (44) 8 73
+    '-' (45) 46 63
+    '/' (47) 48
+    ';' (59) 22 25 26 28
+    '<' (60) 52
+    '=' (61) 30 39
+    '>' (62) 54
+    '[' (91) 13 67
+    ']' (93) 13 67
+    '^' (94) 60
+    '{' (123) 19
+    '|' (124) 59
+    '}' (125) 19
+    '~' (126) 65
+    error (256)
+    INT_LITERAL <int_val> (258) 13 75
+    CHAR_LITERAL <char_val> (259) 76
+    IDENTIFIER <str_val> (260) 4 9 10 29 30 68 74
+    STRING_LITERAL <str_val> (261) 77
+    KW_I32 (262) 14
+    KW_I64 (263) 15
+    KW_BOOL (264) 16
+    KW_CHAR (265) 17
+    KW_VOID (266) 18
+    KW_PTR (267) 12
+    KW_IF (268) 31
+    KW_ELIF (269) 33
+    KW_ELSE (270) 35
+    KW_WHILE (271) 36
+    KW_RETURN (272) 37 38
+    KW_TRUE (273) 78
+    KW_FALSE (274) 79
+    OP_ADD_ASSIGN (275) 40
+    OP_SUB_ASSIGN (276) 41
+    OP_MUL_ASSIGN (277) 42
+    OP_DIV_ASSIGN (278) 43
+    OP_MOD_ASSIGN (279) 44
+    OP_EQ (280) 50
+    OP_NEQ (281) 51
+    OP_LE (282) 53
+    OP_GE (283) 55
+    OP_AND (284) 56
+    OP_OR (285) 57
+    OP_SHL (286) 61
+    OP_SHR (287) 62
+    OP_BACKSLASH (288) 10
+    ERROR_TOKEN (289)
+    UNARY (290)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (57)
+        on left: 0
+    program (58)
+        on left: 1
+        on right: 0
+    function_list <func_list> (59)
+        on left: 2 3
+        on right: 1 3
+    function_decl <func_val> (60)
+        on left: 4
+        on right: 3
+    opt_param_list <param_list> (61)
+        on left: 5 6
+        on right: 4
+    param_list <param_list> (62)
+        on left: 7 8
+        on right: 6 8
+    param <param_val> (63)
+        on left: 9 10
+        on right: 7 8
+    type <type_val> (64)
+        on left: 11 12 13
+        on right: 4 9 10 12 13 29 30
+    base_type <type_val> (65)
+        on left: 14 15 16 17 18
+        on right: 11
+    block <block_val> (66)
+        on left: 19
+        on right: 4 27 31 33 35 36
+    statement_list <stmt_list> (67)
+        on left: 20 21
+        on right: 19 21
+    statement <stmt_val> (68)
+        on left: 22 23 24 25 26 27 28
+        on right: 21
+    var_decl <vardecl_val> (69)
+        on left: 29 30
+        on right: 22
+    if_stmt <if_val> (70)
+        on left: 31
+        on right: 23
+    elif_list <elif_list> (71)
+        on left: 32 33
+        on right: 31 33
+    opt_else <block_val> (72)
+        on left: 34 35
+        on right: 31
+    while_stmt <while_val> (73)
+        on left: 36
+        on right: 24
+    return_stmt <return_val> (74)
+        on left: 37 38
+        on right: 25
+    expr <expr_val> (75)
+        on left: 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
+        on right: 26 30 31 33 36 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 72 73 80
+    opt_arg_list <expr_list> (76)
+        on left: 70 71
+        on right: 68
+    arg_list <expr_list> (77)
+        on left: 72 73
+        on right: 71 73
+    primary_expr <expr_val> (78)
+        on left: 74 75 76 77 78 79 80
+        on right: 69
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 2 (function_list)
+
+    program        go to state 1
+    function_list  go to state 2
+
+
+State 1
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    1 program: function_list .
+    3 function_list: function_list . function_decl
+
+    KW_I32   shift, and go to state 4
+    KW_I64   shift, and go to state 5
+    KW_BOOL  shift, and go to state 6
+    KW_CHAR  shift, and go to state 7
+    KW_VOID  shift, and go to state 8
+    KW_PTR   shift, and go to state 9
+    '['      shift, and go to state 10
+
+    $default  reduce using rule 1 (program)
+
+    function_decl  go to state 11
+    type           go to state 12
+    base_type      go to state 13
+
+
+State 3
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 4
+
+   14 base_type: KW_I32 .
+
+    $default  reduce using rule 14 (base_type)
+
+
+State 5
+
+   15 base_type: KW_I64 .
+
+    $default  reduce using rule 15 (base_type)
+
+
+State 6
+
+   16 base_type: KW_BOOL .
+
+    $default  reduce using rule 16 (base_type)
+
+
+State 7
+
+   17 base_type: KW_CHAR .
+
+    $default  reduce using rule 17 (base_type)
+
+
+State 8
+
+   18 base_type: KW_VOID .
+
+    $default  reduce using rule 18 (base_type)
+
+
+State 9
+
+   12 type: KW_PTR . type
+
+    KW_I32   shift, and go to state 4
+    KW_I64   shift, and go to state 5
+    KW_BOOL  shift, and go to state 6
+    KW_CHAR  shift, and go to state 7
+    KW_VOID  shift, and go to state 8
+    KW_PTR   shift, and go to state 9
+    '['      shift, and go to state 10
+
+    type       go to state 14
+    base_type  go to state 13
+
+
+State 10
+
+   13 type: '[' . INT_LITERAL ']' type
+
+    INT_LITERAL  shift, and go to state 15
+
+
+State 11
+
+    3 function_list: function_list function_decl .
+
+    $default  reduce using rule 3 (function_list)
+
+
+State 12
+
+    4 function_decl: type . IDENTIFIER '(' opt_param_list ')' block
+
+    IDENTIFIER  shift, and go to state 16
+
+
+State 13
+
+   11 type: base_type .
+
+    $default  reduce using rule 11 (type)
+
+
+State 14
+
+   12 type: KW_PTR type .
+
+    $default  reduce using rule 12 (type)
+
+
+State 15
+
+   13 type: '[' INT_LITERAL . ']' type
+
+    ']'  shift, and go to state 17
+
+
+State 16
+
+    4 function_decl: type IDENTIFIER . '(' opt_param_list ')' block
+
+    '('  shift, and go to state 18
+
+
+State 17
+
+   13 type: '[' INT_LITERAL ']' . type
+
+    KW_I32   shift, and go to state 4
+    KW_I64   shift, and go to state 5
+    KW_BOOL  shift, and go to state 6
+    KW_CHAR  shift, and go to state 7
+    KW_VOID  shift, and go to state 8
+    KW_PTR   shift, and go to state 9
+    '['      shift, and go to state 10
+
+    type       go to state 19
+    base_type  go to state 13
+
+
+State 18
+
+    4 function_decl: type IDENTIFIER '(' . opt_param_list ')' block
+
+    KW_I32   shift, and go to state 4
+    KW_I64   shift, and go to state 5
+    KW_BOOL  shift, and go to state 6
+    KW_CHAR  shift, and go to state 7
+    KW_VOID  shift, and go to state 8
+    KW_PTR   shift, and go to state 9
+    '['      shift, and go to state 10
+
+    $default  reduce using rule 5 (opt_param_list)
+
+    opt_param_list  go to state 20
+    param_list      go to state 21
+    param           go to state 22
+    type            go to state 23
+    base_type       go to state 13
+
+
+State 19
+
+   13 type: '[' INT_LITERAL ']' type .
+
+    $default  reduce using rule 13 (type)
+
+
+State 20
+
+    4 function_decl: type IDENTIFIER '(' opt_param_list . ')' block
+
+    ')'  shift, and go to state 24
+
+
+State 21
+
+    6 opt_param_list: param_list .
+    8 param_list: param_list . ',' param
+
+    ','  shift, and go to state 25
+
+    $default  reduce using rule 6 (opt_param_list)
+
+
+State 22
+
+    7 param_list: param .
+
+    $default  reduce using rule 7 (param_list)
+
+
+State 23
+
+    9 param: type . IDENTIFIER
+   10      | type . OP_BACKSLASH OP_BACKSLASH IDENTIFIER
+
+    IDENTIFIER    shift, and go to state 26
+    OP_BACKSLASH  shift, and go to state 27
+
+
+State 24
+
+    4 function_decl: type IDENTIFIER '(' opt_param_list ')' . block
+
+    '{'  shift, and go to state 28
+
+    block  go to state 29
+
+
+State 25
+
+    8 param_list: param_list ',' . param
+
+    KW_I32   shift, and go to state 4
+    KW_I64   shift, and go to state 5
+    KW_BOOL  shift, and go to state 6
+    KW_CHAR  shift, and go to state 7
+    KW_VOID  shift, and go to state 8
+    KW_PTR   shift, and go to state 9
+    '['      shift, and go to state 10
+
+    param      go to state 30
+    type       go to state 23
+    base_type  go to state 13
+
+
+State 26
+
+    9 param: type IDENTIFIER .
+
+    $default  reduce using rule 9 (param)
+
+
+State 27
+
+   10 param: type OP_BACKSLASH . OP_BACKSLASH IDENTIFIER
+
+    OP_BACKSLASH  shift, and go to state 31
+
+
+State 28
+
+   19 block: '{' . statement_list '}'
+
+    $default  reduce using rule 20 (statement_list)
+
+    statement_list  go to state 32
+
+
+State 29
+
+    4 function_decl: type IDENTIFIER '(' opt_param_list ')' block .
+
+    $default  reduce using rule 4 (function_decl)
+
+
+State 30
+
+    8 param_list: param_list ',' param .
+
+    $default  reduce using rule 8 (param_list)
+
+
+State 31
+
+   10 param: type OP_BACKSLASH OP_BACKSLASH . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 33
+
+
+State 32
+
+   19 block: '{' statement_list . '}'
+   21 statement_list: statement_list . statement
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_I32          shift, and go to state 4
+    KW_I64          shift, and go to state 5
+    KW_BOOL         shift, and go to state 6
+    KW_CHAR         shift, and go to state 7
+    KW_VOID         shift, and go to state 8
+    KW_PTR          shift, and go to state 9
+    KW_IF           shift, and go to state 38
+    KW_WHILE        shift, and go to state 39
+    KW_RETURN       shift, and go to state 40
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '['             shift, and go to state 10
+    '('             shift, and go to state 45
+    '{'             shift, and go to state 28
+    '}'             shift, and go to state 46
+    ';'             shift, and go to state 47
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    type          go to state 50
+    base_type     go to state 13
+    block         go to state 51
+    statement     go to state 52
+    var_decl      go to state 53
+    if_stmt       go to state 54
+    while_stmt    go to state 55
+    return_stmt   go to state 56
+    expr          go to state 57
+    primary_expr  go to state 58
+
+
+State 33
+
+   10 param: type OP_BACKSLASH OP_BACKSLASH IDENTIFIER .
+
+    $default  reduce using rule 10 (param)
+
+
+State 34
+
+   75 primary_expr: INT_LITERAL .
+
+    $default  reduce using rule 75 (primary_expr)
+
+
+State 35
+
+   76 primary_expr: CHAR_LITERAL .
+
+    $default  reduce using rule 76 (primary_expr)
+
+
+State 36
+
+   68 expr: IDENTIFIER . '(' opt_arg_list ')'
+   74 primary_expr: IDENTIFIER .
+
+    '('  shift, and go to state 59
+
+    $default  reduce using rule 74 (primary_expr)
+
+
+State 37
+
+   77 primary_expr: STRING_LITERAL .
+
+    $default  reduce using rule 77 (primary_expr)
+
+
+State 38
+
+   31 if_stmt: KW_IF . '(' expr ')' block elif_list opt_else
+
+    '('  shift, and go to state 60
+
+
+State 39
+
+   36 while_stmt: KW_WHILE . '(' expr ')' block
+
+    '('  shift, and go to state 61
+
+
+State 40
+
+   37 return_stmt: KW_RETURN .
+   38            | KW_RETURN . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    $default  reduce using rule 37 (return_stmt)
+
+    expr          go to state 62
+    primary_expr  go to state 58
+
+
+State 41
+
+   78 primary_expr: KW_TRUE .
+
+    $default  reduce using rule 78 (primary_expr)
+
+
+State 42
+
+   79 primary_expr: KW_FALSE .
+
+    $default  reduce using rule 79 (primary_expr)
+
+
+State 43
+
+   63 expr: '-' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 63
+    primary_expr  go to state 58
+
+
+State 44
+
+   66 expr: '*' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 64
+    primary_expr  go to state 58
+
+
+State 45
+
+   80 primary_expr: '(' . expr ')'
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 65
+    primary_expr  go to state 58
+
+
+State 46
+
+   19 block: '{' statement_list '}' .
+
+    $default  reduce using rule 19 (block)
+
+
+State 47
+
+   28 statement: ';' .
+
+    $default  reduce using rule 28 (statement)
+
+
+State 48
+
+   64 expr: '!' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 66
+    primary_expr  go to state 58
+
+
+State 49
+
+   65 expr: '~' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 67
+    primary_expr  go to state 58
+
+
+State 50
+
+   29 var_decl: type . IDENTIFIER
+   30         | type . IDENTIFIER '=' expr
+
+    IDENTIFIER  shift, and go to state 68
+
+
+State 51
+
+   27 statement: block .
+
+    $default  reduce using rule 27 (statement)
+
+
+State 52
+
+   21 statement_list: statement_list statement .
+
+    $default  reduce using rule 21 (statement_list)
+
+
+State 53
+
+   22 statement: var_decl . ';'
+
+    ';'  shift, and go to state 69
+
+
+State 54
+
+   23 statement: if_stmt .
+
+    $default  reduce using rule 23 (statement)
+
+
+State 55
+
+   24 statement: while_stmt .
+
+    $default  reduce using rule 24 (statement)
+
+
+State 56
+
+   25 statement: return_stmt . ';'
+
+    ';'  shift, and go to state 70
+
+
+State 57
+
+   26 statement: expr . ';'
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+    ';'            shift, and go to state 96
+
+
+State 58
+
+   69 expr: primary_expr .
+
+    $default  reduce using rule 69 (expr)
+
+
+State 59
+
+   68 expr: IDENTIFIER '(' . opt_arg_list ')'
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    $default  reduce using rule 70 (opt_arg_list)
+
+    expr          go to state 97
+    opt_arg_list  go to state 98
+    arg_list      go to state 99
+    primary_expr  go to state 58
+
+
+State 60
+
+   31 if_stmt: KW_IF '(' . expr ')' block elif_list opt_else
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 100
+    primary_expr  go to state 58
+
+
+State 61
+
+   36 while_stmt: KW_WHILE '(' . expr ')' block
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 101
+    primary_expr  go to state 58
+
+
+State 62
+
+   38 return_stmt: KW_RETURN expr .
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 38 (return_stmt)
+
+
+State 63
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   63     | '-' expr .
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 63 (expr)
+
+
+State 64
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   66     | '*' expr .
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 66 (expr)
+
+
+State 65
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+   80 primary_expr: '(' expr . ')'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+    ')'            shift, and go to state 102
+
+
+State 66
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   64     | '!' expr .
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 64 (expr)
+
+
+State 67
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   65     | '~' expr .
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 65 (expr)
+
+
+State 68
+
+   29 var_decl: type IDENTIFIER .
+   30         | type IDENTIFIER . '=' expr
+
+    '='  shift, and go to state 103
+
+    $default  reduce using rule 29 (var_decl)
+
+
+State 69
+
+   22 statement: var_decl ';' .
+
+    $default  reduce using rule 22 (statement)
+
+
+State 70
+
+   25 statement: return_stmt ';' .
+
+    $default  reduce using rule 25 (statement)
+
+
+State 71
+
+   40 expr: expr OP_ADD_ASSIGN . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 104
+    primary_expr  go to state 58
+
+
+State 72
+
+   41 expr: expr OP_SUB_ASSIGN . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 105
+    primary_expr  go to state 58
+
+
+State 73
+
+   42 expr: expr OP_MUL_ASSIGN . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 106
+    primary_expr  go to state 58
+
+
+State 74
+
+   43 expr: expr OP_DIV_ASSIGN . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 107
+    primary_expr  go to state 58
+
+
+State 75
+
+   44 expr: expr OP_MOD_ASSIGN . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 108
+    primary_expr  go to state 58
+
+
+State 76
+
+   50 expr: expr OP_EQ . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 109
+    primary_expr  go to state 58
+
+
+State 77
+
+   51 expr: expr OP_NEQ . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 110
+    primary_expr  go to state 58
+
+
+State 78
+
+   53 expr: expr OP_LE . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 111
+    primary_expr  go to state 58
+
+
+State 79
+
+   55 expr: expr OP_GE . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 112
+    primary_expr  go to state 58
+
+
+State 80
+
+   56 expr: expr OP_AND . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 113
+    primary_expr  go to state 58
+
+
+State 81
+
+   57 expr: expr OP_OR . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 114
+    primary_expr  go to state 58
+
+
+State 82
+
+   61 expr: expr OP_SHL . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 115
+    primary_expr  go to state 58
+
+
+State 83
+
+   62 expr: expr OP_SHR . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 116
+    primary_expr  go to state 58
+
+
+State 84
+
+   39 expr: expr '=' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 117
+    primary_expr  go to state 58
+
+
+State 85
+
+   59 expr: expr '|' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 118
+    primary_expr  go to state 58
+
+
+State 86
+
+   60 expr: expr '^' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 119
+    primary_expr  go to state 58
+
+
+State 87
+
+   58 expr: expr '&' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 120
+    primary_expr  go to state 58
+
+
+State 88
+
+   52 expr: expr '<' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 121
+    primary_expr  go to state 58
+
+
+State 89
+
+   54 expr: expr '>' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 122
+    primary_expr  go to state 58
+
+
+State 90
+
+   45 expr: expr '+' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 123
+    primary_expr  go to state 58
+
+
+State 91
+
+   46 expr: expr '-' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 124
+    primary_expr  go to state 58
+
+
+State 92
+
+   47 expr: expr '*' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 125
+    primary_expr  go to state 58
+
+
+State 93
+
+   48 expr: expr '/' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 126
+    primary_expr  go to state 58
+
+
+State 94
+
+   49 expr: expr '%' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 127
+    primary_expr  go to state 58
+
+
+State 95
+
+   67 expr: expr '[' . expr ']'
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 128
+    primary_expr  go to state 58
+
+
+State 96
+
+   26 statement: expr ';' .
+
+    $default  reduce using rule 26 (statement)
+
+
+State 97
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+   72 arg_list: expr .
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 72 (arg_list)
+
+
+State 98
+
+   68 expr: IDENTIFIER '(' opt_arg_list . ')'
+
+    ')'  shift, and go to state 129
+
+
+State 99
+
+   71 opt_arg_list: arg_list .
+   73 arg_list: arg_list . ',' expr
+
+    ','  shift, and go to state 130
+
+    $default  reduce using rule 71 (opt_arg_list)
+
+
+State 100
+
+   31 if_stmt: KW_IF '(' expr . ')' block elif_list opt_else
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+    ')'            shift, and go to state 131
+
+
+State 101
+
+   36 while_stmt: KW_WHILE '(' expr . ')' block
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+    ')'            shift, and go to state 132
+
+
+State 102
+
+   80 primary_expr: '(' expr ')' .
+
+    $default  reduce using rule 80 (primary_expr)
+
+
+State 103
+
+   30 var_decl: type IDENTIFIER '=' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 133
+    primary_expr  go to state 58
+
+
+State 104
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   40     | expr OP_ADD_ASSIGN expr .
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 40 (expr)
+
+
+State 105
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   41     | expr OP_SUB_ASSIGN expr .
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 41 (expr)
+
+
+State 106
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   42     | expr OP_MUL_ASSIGN expr .
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 42 (expr)
+
+
+State 107
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   43     | expr OP_DIV_ASSIGN expr .
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 43 (expr)
+
+
+State 108
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   44     | expr OP_MOD_ASSIGN expr .
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 44 (expr)
+
+
+State 109
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   50     | expr OP_EQ expr .
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 50 (expr)
+
+
+State 110
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   51     | expr OP_NEQ expr .
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 51 (expr)
+
+
+State 111
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   53     | expr OP_LE expr .
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 53 (expr)
+
+
+State 112
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   55     | expr OP_GE expr .
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 55 (expr)
+
+
+State 113
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   56     | expr OP_AND expr .
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_EQ   shift, and go to state 76
+    OP_NEQ  shift, and go to state 77
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '|'     shift, and go to state 85
+    '^'     shift, and go to state 86
+    '&'     shift, and go to state 87
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 56 (expr)
+
+
+State 114
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   57     | expr OP_OR expr .
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_EQ   shift, and go to state 76
+    OP_NEQ  shift, and go to state 77
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_AND  shift, and go to state 80
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '|'     shift, and go to state 85
+    '^'     shift, and go to state 86
+    '&'     shift, and go to state 87
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 57 (expr)
+
+
+State 115
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   61     | expr OP_SHL expr .
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    '+'  shift, and go to state 90
+    '-'  shift, and go to state 91
+    '*'  shift, and go to state 92
+    '/'  shift, and go to state 93
+    '%'  shift, and go to state 94
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 61 (expr)
+
+
+State 116
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   62     | expr OP_SHR expr .
+   67     | expr . '[' expr ']'
+
+    '+'  shift, and go to state 90
+    '-'  shift, and go to state 91
+    '*'  shift, and go to state 92
+    '/'  shift, and go to state 93
+    '%'  shift, and go to state 94
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 62 (expr)
+
+
+State 117
+
+   39 expr: expr . '=' expr
+   39     | expr '=' expr .
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 39 (expr)
+
+
+State 118
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   59     | expr '|' expr .
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_EQ   shift, and go to state 76
+    OP_NEQ  shift, and go to state 77
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '^'     shift, and go to state 86
+    '&'     shift, and go to state 87
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 59 (expr)
+
+
+State 119
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   60     | expr '^' expr .
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_EQ   shift, and go to state 76
+    OP_NEQ  shift, and go to state 77
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '&'     shift, and go to state 87
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 60 (expr)
+
+
+State 120
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   58     | expr '&' expr .
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_EQ   shift, and go to state 76
+    OP_NEQ  shift, and go to state 77
+    OP_LE   shift, and go to state 78
+    OP_GE   shift, and go to state 79
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '<'     shift, and go to state 88
+    '>'     shift, and go to state 89
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 58 (expr)
+
+
+State 121
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   52     | expr '<' expr .
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 52 (expr)
+
+
+State 122
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   54     | expr '>' expr .
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_SHL  shift, and go to state 82
+    OP_SHR  shift, and go to state 83
+    '+'     shift, and go to state 90
+    '-'     shift, and go to state 91
+    '*'     shift, and go to state 92
+    '/'     shift, and go to state 93
+    '%'     shift, and go to state 94
+    '['     shift, and go to state 95
+
+    $default  reduce using rule 54 (expr)
+
+
+State 123
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   45     | expr '+' expr .
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    '*'  shift, and go to state 92
+    '/'  shift, and go to state 93
+    '%'  shift, and go to state 94
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 45 (expr)
+
+
+State 124
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   46     | expr '-' expr .
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    '*'  shift, and go to state 92
+    '/'  shift, and go to state 93
+    '%'  shift, and go to state 94
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 46 (expr)
+
+
+State 125
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   47     | expr '*' expr .
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 47 (expr)
+
+
+State 126
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   48     | expr '/' expr .
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 48 (expr)
+
+
+State 127
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   49     | expr '%' expr .
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    '['  shift, and go to state 95
+
+    $default  reduce using rule 49 (expr)
+
+
+State 128
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+   67     | expr '[' expr . ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+    ']'            shift, and go to state 134
+
+
+State 129
+
+   68 expr: IDENTIFIER '(' opt_arg_list ')' .
+
+    $default  reduce using rule 68 (expr)
+
+
+State 130
+
+   73 arg_list: arg_list ',' . expr
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 135
+    primary_expr  go to state 58
+
+
+State 131
+
+   31 if_stmt: KW_IF '(' expr ')' . block elif_list opt_else
+
+    '{'  shift, and go to state 28
+
+    block  go to state 136
+
+
+State 132
+
+   36 while_stmt: KW_WHILE '(' expr ')' . block
+
+    '{'  shift, and go to state 28
+
+    block  go to state 137
+
+
+State 133
+
+   30 var_decl: type IDENTIFIER '=' expr .
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 30 (var_decl)
+
+
+State 134
+
+   67 expr: expr '[' expr ']' .
+
+    $default  reduce using rule 67 (expr)
+
+
+State 135
+
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+   73 arg_list: arg_list ',' expr .
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+
+    $default  reduce using rule 73 (arg_list)
+
+
+State 136
+
+   31 if_stmt: KW_IF '(' expr ')' block . elif_list opt_else
+
+    $default  reduce using rule 32 (elif_list)
+
+    elif_list  go to state 138
+
+
+State 137
+
+   36 while_stmt: KW_WHILE '(' expr ')' block .
+
+    $default  reduce using rule 36 (while_stmt)
+
+
+State 138
+
+   31 if_stmt: KW_IF '(' expr ')' block elif_list . opt_else
+   33 elif_list: elif_list . KW_ELIF '(' expr ')' block
+
+    KW_ELIF  shift, and go to state 139
+    KW_ELSE  shift, and go to state 140
+
+    $default  reduce using rule 34 (opt_else)
+
+    opt_else  go to state 141
+
+
+State 139
+
+   33 elif_list: elif_list KW_ELIF . '(' expr ')' block
+
+    '('  shift, and go to state 142
+
+
+State 140
+
+   35 opt_else: KW_ELSE . block
+
+    '{'  shift, and go to state 28
+
+    block  go to state 143
+
+
+State 141
+
+   31 if_stmt: KW_IF '(' expr ')' block elif_list opt_else .
+
+    $default  reduce using rule 31 (if_stmt)
+
+
+State 142
+
+   33 elif_list: elif_list KW_ELIF '(' . expr ')' block
+
+    INT_LITERAL     shift, and go to state 34
+    CHAR_LITERAL    shift, and go to state 35
+    IDENTIFIER      shift, and go to state 36
+    STRING_LITERAL  shift, and go to state 37
+    KW_TRUE         shift, and go to state 41
+    KW_FALSE        shift, and go to state 42
+    '-'             shift, and go to state 43
+    '*'             shift, and go to state 44
+    '('             shift, and go to state 45
+    '!'             shift, and go to state 48
+    '~'             shift, and go to state 49
+
+    expr          go to state 144
+    primary_expr  go to state 58
+
+
+State 143
+
+   35 opt_else: KW_ELSE block .
+
+    $default  reduce using rule 35 (opt_else)
+
+
+State 144
+
+   33 elif_list: elif_list KW_ELIF '(' expr . ')' block
+   39 expr: expr . '=' expr
+   40     | expr . OP_ADD_ASSIGN expr
+   41     | expr . OP_SUB_ASSIGN expr
+   42     | expr . OP_MUL_ASSIGN expr
+   43     | expr . OP_DIV_ASSIGN expr
+   44     | expr . OP_MOD_ASSIGN expr
+   45     | expr . '+' expr
+   46     | expr . '-' expr
+   47     | expr . '*' expr
+   48     | expr . '/' expr
+   49     | expr . '%' expr
+   50     | expr . OP_EQ expr
+   51     | expr . OP_NEQ expr
+   52     | expr . '<' expr
+   53     | expr . OP_LE expr
+   54     | expr . '>' expr
+   55     | expr . OP_GE expr
+   56     | expr . OP_AND expr
+   57     | expr . OP_OR expr
+   58     | expr . '&' expr
+   59     | expr . '|' expr
+   60     | expr . '^' expr
+   61     | expr . OP_SHL expr
+   62     | expr . OP_SHR expr
+   67     | expr . '[' expr ']'
+
+    OP_ADD_ASSIGN  shift, and go to state 71
+    OP_SUB_ASSIGN  shift, and go to state 72
+    OP_MUL_ASSIGN  shift, and go to state 73
+    OP_DIV_ASSIGN  shift, and go to state 74
+    OP_MOD_ASSIGN  shift, and go to state 75
+    OP_EQ          shift, and go to state 76
+    OP_NEQ         shift, and go to state 77
+    OP_LE          shift, and go to state 78
+    OP_GE          shift, and go to state 79
+    OP_AND         shift, and go to state 80
+    OP_OR          shift, and go to state 81
+    OP_SHL         shift, and go to state 82
+    OP_SHR         shift, and go to state 83
+    '='            shift, and go to state 84
+    '|'            shift, and go to state 85
+    '^'            shift, and go to state 86
+    '&'            shift, and go to state 87
+    '<'            shift, and go to state 88
+    '>'            shift, and go to state 89
+    '+'            shift, and go to state 90
+    '-'            shift, and go to state 91
+    '*'            shift, and go to state 92
+    '/'            shift, and go to state 93
+    '%'            shift, and go to state 94
+    '['            shift, and go to state 95
+    ')'            shift, and go to state 145
+
+
+State 145
+
+   33 elif_list: elif_list KW_ELIF '(' expr ')' . block
+
+    '{'  shift, and go to state 28
+
+    block  go to state 146
+
+
+State 146
+
+   33 elif_list: elif_list KW_ELIF '(' expr ')' block .
+
+    $default  reduce using rule 33 (elif_list)
