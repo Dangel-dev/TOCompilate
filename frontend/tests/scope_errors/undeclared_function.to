@@ -1,0 +1,5 @@
+i32 main() {
+    unknown_function(1, 2);
+    return 0;
+}
+

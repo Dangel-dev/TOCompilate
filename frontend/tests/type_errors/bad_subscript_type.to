@@ -1,0 +1,6 @@
+i32 main() {
+    [10] i32 arr;
+    i32 val = arr["invalid_index"];
+    return val;
+}
+

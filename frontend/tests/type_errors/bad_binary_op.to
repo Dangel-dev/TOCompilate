@@ -1,0 +1,7 @@
+i32 main() {
+    bool flag = true;
+    i32 a = 10;
+    i32 res = a + flag;
+    return res;
+}
+

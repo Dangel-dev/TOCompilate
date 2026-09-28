@@ -1,0 +1,7 @@
+i32 main() {
+    ptr$ i32 p1 = 0;
+    ptr$ i32 p2 = 0;
+    ptr$ i32 res = p1 + p2;
+    return 0;
+}
+

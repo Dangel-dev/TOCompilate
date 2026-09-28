@@ -1,0 +1,9 @@
+void do_work() {
+    return 42;
+}
+
+i32 main() {
+    do_work();
+    return 0;
+}
+

@@ -1,0 +1,6 @@
+i32 main() {
+    i32 not_an_array = 42;
+    i32 val = not_an_array[0];
+    return val;
+}
+

@@ -1,0 +1,8 @@
+i32 calculate(i32 a, i32 a) {
+    return a;
+}
+
+i32 main() {
+    return calculate(1, 2);
+}
+

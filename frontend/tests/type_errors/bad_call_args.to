@@ -1,0 +1,9 @@
+void foo(i32 x, bool y) {
+    return;
+}
+
+i32 main() {
+    foo("string", 123);
+    return 0;
+}
+

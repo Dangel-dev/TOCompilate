@@ -1,0 +1,12 @@
+i32 foo(i32 x) {
+    return x;
+}
+
+i32 foo(i32 x) {
+    return x * 2;
+}
+
+i32 main() {
+    return foo(5);
+}
+

@@ -1,0 +1,8 @@
+i32 main() {
+    if (true) {
+        i32 scoped_val = 5;
+    }
+    i32 y = scoped_val;
+    return y;
+}
+

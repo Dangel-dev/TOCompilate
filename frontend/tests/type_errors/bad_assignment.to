@@ -1,0 +1,6 @@
+i32 main() {
+    i32 a = 0;
+    a = "Hello";
+    return a;
+}
+

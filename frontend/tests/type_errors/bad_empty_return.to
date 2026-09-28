@@ -1,0 +1,8 @@
+i32 compute() {
+    return;
+}
+
+i32 main() {
+    return compute();
+}
+
