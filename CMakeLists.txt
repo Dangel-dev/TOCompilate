@@ -34,3 +34,5 @@ enable_testing()
 add_test(NAME graph COMMAND test_graph)
 add_test(NAME tree COMMAND test_tree)
 add_subdirectory(frontend)
+
+add_subdirectory(hir)
