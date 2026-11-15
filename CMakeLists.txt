@@ -36,3 +36,5 @@ add_test(NAME tree COMMAND test_tree)
 add_subdirectory(frontend)
 
 add_subdirectory(hir)
+
+add_subdirectory(lir)
